@@ -49,14 +49,17 @@ module panel () {
         }
         //arduino void
         translate([0 , -PANEL_OFFSET_Y, 0]) translate([-20, 15, 20]) arduino();
-       //window for frame counter
+        //window for frame counter
         translate([(PANEL_X / 2) - 32, (PANEL_Y / 2) - 8, 0]) cube([16, 16, 4], center = true);
         //front  supports
-       translate([56.8, (FRONT_SPACING_Z / 2) + 2.1, 0]) cylinder(r = 5 / 2, h = 16, center = true);
-       translate([56.8, (FRONT_SPACING_Z / 2) + 2 - FRONT_SPACING_Z, 0]) cylinder(r = 5 / 2, h = 16, center = true);
-    
+        translate([56.8, (FRONT_SPACING_Z / 2) + 2.1, 0]) cylinder(r = 5 / 2, h = 16, center = true);
+        translate([56.8, (FRONT_SPACING_Z / 2) + 2 - FRONT_SPACING_Z, 0]) cylinder(r = 5 / 2, h = 16, center = true);
+        //back supports
+        translate([-56.8 -2.25, (50 / 2) , 0]) cylinder(r = 5 / 2, h = 16, center = true);
+        translate([-56.8 -2.25, (50 / 2)  - 50, 0]) cylinder(r = 5 / 2, h = 16, center = true);
+        //center standoff void
+        translate([0, -PANEL_OFFSET_Y, 0]) translate([17, -6, 25]) cylinder(r = 8 / 2, h = 50, center = true);
   }
-    
 }
 
 
@@ -214,6 +217,7 @@ module cross_bar () {
 }
 
 module back_support () {
+    $fn = 60;
   A = 27;
   B = 33;
   difference() {
@@ -240,6 +244,7 @@ module back_support () {
 }
 
 module back_clamp () {
+    $fn = 60;
     difference () {
         intersection () {
             cube([20, 75, 8], center = true);
@@ -267,6 +272,7 @@ module back_clamp () {
 }
 
 module front_support() {
+    $fn = 60;
   difference () {
    	translate([-2.50, 0, 0]) rotate([90, 0, 0]) union() {
       //rounded_cube([45, 70, 18], d = 6, center = true);
@@ -305,7 +311,7 @@ module front_support() {
 }
 
 module front_clamp () {
-    //$fn = 60;
+    $fn = 60;
 	D = 24 + (2.16-1.53);
 	H = 3;
 	D2 = 30;
@@ -334,41 +340,49 @@ module center_stand () {
     translate([0, 0, -(31 / 2) + 2]) cylinder(r = 16 / 2, h = 4, center = true);
 }
 
-translate([17, -6, 25]) center_stand();
+//translate([17, -6, 25]) center_stand();
 
-translate([0, 0, -24]) bolex();
+//translate([0, 0, -24]) bolex();
 translate([(170 / 2) - (147.3 - 135), (BOLEX_Y / 2) - 47.8, -12]) {
 	//translate([0, FRONT_SPACING_Z / 2, 0]) rotate([0, -90, 0]) front_clamp();
-	translate([0, -FRONT_SPACING_Z / 2, 0]) rotate([0, -90, 0]) front_clamp();
+	//translate([0, -FRONT_SPACING_Z / 2, 0]) rotate([0, -90, 0]) front_clamp();
 }
+//front_clamp();
   //translate([0, 0, 10]) rotate([0, 90, 0]) cross_bar();
 
 /*translate([SHAFT_POSITION_X, SHAFT_POSITION_Y, 12]) difference() {
     key();
     translate([50, 0, 0]) cube([100, 100, 100], center = true);
 }*/
-translate([PANEL_OFFSET_X, PANEL_OFFSET_Y, PANEL_OFFSET_Z]) panel();
+//translate([PANEL_OFFSET_X, PANEL_OFFSET_Y, PANEL_OFFSET_Z]) panel();
+//projection() panel();
 //translate([SHAFT_POSITION_X, SHAFT_POSITION_Y, 60]) stepper();
 //mount_base();
 //translate([-20, 15, 55]) arduino();
-translate([-5, 20, 63]) color([0, 0, 1], 0.2) difference () {
+/*translate([-5, 20, 63]) color([0, 0, 1], 0.2) difference () {
   cube([96, 96, 40], center = true);
   translate([0, 0, -3]) cube([96 - 6, 96 - 6, 40 - 3], center = true);
-}
+}*/
 translate([(170 / 2) - (147.3 - 135), -10, 13]) {
   //difference () {
-  	front_support();
+  	//front_support();
     //translate([0, 50, 0]) cube([100, 100, 200], center = true);
   //}
 }
-translate([(170 / 2) - (147.3 - 135), -10 + FRONT_SPACING_Z , 13]) front_support();
+//translate([30, 0, -35]) rotate([180, 0, 0]) 
+//front_support();
+//translate([30 + 18, 0, -35 - 18]) rotate([180, 0, 0]) front_support();
+//translate([(170 / 2) - (147.3 - 135), -10 + FRONT_SPACING_Z , 13]) front_support();
 //translate([0, 20, 50],) cylinder(r = 5, h = 28, center = true);
 
-translate([-(170 / 2) + (147.3 - 135) + 1.5, 20, 0]) rotate([0, -90, 0]) back_clamp();
-translate([-(170 / 2) + (147.3 - 135), (BODY_Y / 2) - 25 , 18.5]) back_support();
+//translate([-(170 / 2) + (147.3 - 135) + 1.5, 20, 0]) rotate([0, -90, 0]) 
+back_clamp();
+//translate([-(170 / 2) + (147.3 - 135), (BODY_Y / 2) - 25 , 18.5]) 
+ //back_support();
+//translate([15, 0, -15]) back_support();
 translate([-(170 / 2) + (147.3 - 135), (BODY_Y / 2) - 25 - 50 , 18.5]){
-  difference () {
-  	back_support();
-    translate([0, 50, 0]) cube([100, 100, 200], center = true);
-  }
+  //difference () {
+  	//back_support();
+    //translate([0, 50, 0]) cube([100, 100, 200], center = true);
+  //}
 }
