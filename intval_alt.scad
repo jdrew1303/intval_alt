@@ -41,6 +41,7 @@ module rounded_cube (cube_arr = [1, 1, 1], d = 0, center = false) {
 }
 
 module panel () {
+    $fn = 60;
     difference () {
         rounded_cube([PANEL_X, PANEL_Y, PANEL_Z], d = 8, center = true);
     	//stepper void
@@ -127,10 +128,10 @@ module one_to_eight_shaft () {
 }
 
 module key () {
-    //$fn = 60;
+    $fn = 60;
     BODY = 16;
 	OD = 7.16 - .15;
-	ID = 3.85 + .15;
+	ID = 3.2;
     H = 5;
   	BAR = 4.98 - 3.66;
 	BAR_W = 1.34;
@@ -162,6 +163,11 @@ module key () {
                 }
 			}
     	}
+  }
+  //outside
+  translate([0, 0, 2]) difference () {
+    cylinder(r = 12 / 2, h = 6, center = true);
+    cylinder(r = 9.1 / 2, h = 6 + 1, center = true);
   }
   
 }
@@ -272,7 +278,7 @@ module back_clamp () {
 }
 
 module front_support() {
-    $fn = 60;
+  $fn = 60;
   difference () {
    	translate([-2.50, 0, 0]) rotate([90, 0, 0]) union() {
       //rounded_cube([45, 70, 18], d = 6, center = true);
@@ -290,7 +296,7 @@ module front_support() {
     //top bolt
     translate([-16, 0, 29]) cylinder(r = 5 / 2, h = 25, center = true);
     //bolt shaft and hex
-    translate([10, 0, -25]) rotate([0, 90, 0]) {
+    translate([10, 0, -25 + 3]) rotate([0, 90, 0]) {
     	cylinder(r = 5 / 2, h = 26, center = true);
          translate([0, 0, 0]) cylinder(r = 12.2 / 2, h = 10, center =true);
         translate([0, 0, 6.5])  cylinder(r = 8.9 / 2, h = 3.5, center = true, $fn = 6);
@@ -343,17 +349,17 @@ module center_stand () {
 //translate([17, -6, 25]) center_stand();
 
 //translate([0, 0, -24]) bolex();
-translate([(170 / 2) - (147.3 - 135), (BOLEX_Y / 2) - 47.8, -12]) {
+translate([(170 / 2) - (147.3 - 135), (BOLEX_Y / 2) - 47.8, -12 + 3]) {
 	//translate([0, FRONT_SPACING_Z / 2, 0]) rotate([0, -90, 0]) front_clamp();
 	//translate([0, -FRONT_SPACING_Z / 2, 0]) rotate([0, -90, 0]) front_clamp();
 }
 //front_clamp();
   //translate([0, 0, 10]) rotate([0, 90, 0]) cross_bar();
 
-/*translate([SHAFT_POSITION_X, SHAFT_POSITION_Y, 12]) difference() {
-    key();
-    translate([50, 0, 0]) cube([100, 100, 100], center = true);
-}*/
+translate([SHAFT_POSITION_X, SHAFT_POSITION_Y, 12]) difference() {
+    //key();
+    //translate([50, 0, 0]) cube([100, 100, 100], center = true);
+}
 //translate([PANEL_OFFSET_X, PANEL_OFFSET_Y, PANEL_OFFSET_Z]) panel();
 //projection() panel();
 //translate([SHAFT_POSITION_X, SHAFT_POSITION_Y, 60]) stepper();
@@ -370,13 +376,12 @@ translate([(170 / 2) - (147.3 - 135), -10, 13]) {
   //}
 }
 //translate([30, 0, -35]) rotate([180, 0, 0]) 
-//front_support();
+front_support();
 //translate([30 + 18, 0, -35 - 18]) rotate([180, 0, 0]) front_support();
 //translate([(170 / 2) - (147.3 - 135), -10 + FRONT_SPACING_Z , 13]) front_support();
 //translate([0, 20, 50],) cylinder(r = 5, h = 28, center = true);
 
-//translate([-(170 / 2) + (147.3 - 135) + 1.5, 20, 0]) rotate([0, -90, 0]) 
-back_clamp();
+//translate([-(170 / 2) + (147.3 - 135) + 1.5, 20, 0]) rotate([0, -90, 0]) back_clamp();
 //translate([-(170 / 2) + (147.3 - 135), (BODY_Y / 2) - 25 , 18.5]) 
  //back_support();
 //translate([15, 0, -15]) back_support();
